@@ -4,8 +4,8 @@ module BST
     
     def initialize(value,nodes={})
       @value = value
-      @left_child = nodes[:left]
-      @right_child = nodes[:right]
+      @left = nodes[:left]
+      @right = nodes[:right]
       @parent = nodes[:parent]
     end
   end
