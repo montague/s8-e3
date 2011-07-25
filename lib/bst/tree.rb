@@ -50,7 +50,6 @@ module BST
             parent.left == current ? parent.left = nil : parent.right = nil
             @size -= 1
           end
-
           break
         end
         # traversal code
@@ -66,19 +65,9 @@ module BST
       current = @root
       while true
         return true if current.value == value
-        if current.value > value
-          if current.left.nil?
-            return false
-          else
-            current = current.left
-          end
-        else
-          if current.right.nil?
-            return false
-          else
-            current = current.right
-          end
-        end
+        side = current.value > value ? :left : :right
+        return false if current.send(side).nil?
+        current = current.send(side)
       end
     end
 
@@ -133,6 +122,5 @@ module BST
       end
       current
     end
-
   end
 end

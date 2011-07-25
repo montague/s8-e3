@@ -16,6 +16,7 @@ class TreeTest < Test::Unit::TestCase
     assert_equal 1, @tree.size, "tree starts with one value"
     assert @tree.add(2), "can add a value"
     assert_equal 2, @tree.size, "add a value, tree grows"
+    assert_equal 2, @tree.root.right.value, "value should be right child of root"
   end
   
   def test_remove_a_leaf_node
@@ -52,6 +53,8 @@ class TreeTest < Test::Unit::TestCase
     assert @tree.contains?(2), "should contain a value after it's added"
     @tree.remove(2)
     assert !@tree.contains?(2), "should not contain a value after it's removed"
+    @tree.add(-1)
+    assert @tree.contains?(-1), "should contain a value in left subtree"
   end
   
   
