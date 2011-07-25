@@ -1,9 +1,6 @@
 module BST
-  # TODO 
-  # write a .to_s function
-  # write add and remove
   class Tree
-    attr_reader :root, :size, :depth
+    attr_reader :root, :size
 
     def initialize value
       @root = Node.new(value)

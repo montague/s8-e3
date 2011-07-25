@@ -14,7 +14,6 @@ class TreeTest < Test::Unit::TestCase
     assert_equal 1, @tree.size, "tree starts with one node"
     assert @tree.add(2), "can add a value"
     assert_equal 2, @tree.size, "add a value, tree grows"
-    assert @tree.contains?(2), "value is now in the tree"
   end
   
   def test_remove_a_node
@@ -22,9 +21,18 @@ class TreeTest < Test::Unit::TestCase
     assert !@tree.remove(1), "can't remove only value"
     @tree.add 2
     assert @tree.remove(2), "can remove a value"
-    assert !@tree.contains?(2), "after removal, tree doesn't contain value"
     assert_equal 1, @tree.size, "can remove if more than one value"
   end
+  
+  def test_contains_method
+    assert @tree.contains?(1), "should contain setup value"
+    assert !@tree.contains?(2), "should not contain a value before it's added"
+    @tree.add(2)
+    assert @tree.contains?(2), "should contain a value after it's added"
+    @tree.remove(2)
+    assert !@tree.contains?(2), "should not contain a value after it's removed"
+  end
+  
   
   def test_to_s_methods
     tree = Tree.new(10)
