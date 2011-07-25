@@ -33,26 +33,31 @@ module BST
       current = @root
       parent = nil
       while true
-        if current.value == value
-          parent.left === current ? @parent.left = nil : parent.right = nil
-          @size -= 1
+        if current.value == value #found the value to remove
+          # three possibilities
+          if current.left && current.right # two children
+            # find next biggest value or next smallest value. copy that value into node. 
+            # delete the node that contained the next biggest value
+            # to keep tree reasonably balanced, flip a coin to choose.
+            replacement = Time.now.to_i.even? ? min_under_node(current) : max_under_node(current)
+            new_value = replacement.value
+            remove new_value
+            current.value = new_value
+          elsif child = (current.left || current.right) # one child
+            parent.left == current ? parent.left = child : parent.right = child
+            @size -= 1
+          else #no children
+            parent.left == current ? parent.left = nil : parent.right = nil
+            @size -= 1
+          end
+
           break
         end
-        if current.value > value
-          if current.left.nil?
-            break
-          else
-            parent = current
-            current = current.left
-          end
-        else
-          if current.right.nil?
-            break
-          else
-            parent = current
-            current = current.right
-          end
-        end
+        # traversal code
+        side = current.value > value ? :left : :right
+        break if current.send(side).nil?
+        parent = current
+        current = current.send(side)
       end
       true
     end
@@ -82,13 +87,13 @@ module BST
       in_order_traversal @root, ary
       ary.join(',')
     end
-    
+
     def to_s_reverse
       ary = []
       reverse_order_traversal @root, ary
       ary.join(',')
     end
-   
+
     def reverse_order_traversal node, ary
       if node.right
         reverse_order_traversal(node.right,ary)
@@ -98,7 +103,7 @@ module BST
         reverse_order_traversal(node.left,ary)
       end
     end
-    
+
     def in_order_traversal node, ary
       if node.left
         in_order_traversal(node.left,ary)
@@ -107,6 +112,26 @@ module BST
       if node.right
         in_order_traversal(node.right,ary)
       end
+    end
+
+    private
+
+    # get node with smallest value of right subtree
+    def min_under_node node
+      current = node.right
+      while current.left
+        current = current.left
+      end
+      current
+    end
+
+    # get node with greatest value of left subtree
+    def max_under_node node
+      current = node.left
+      while current.right
+        current = current.right
+      end
+      current
     end
 
   end
