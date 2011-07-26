@@ -1,41 +1,48 @@
-NOTE: If in doubt about how to submit your project, read SUBMISSION_GUIDELINES
+# BST
 
-Combinatorics is a fascinating branch of mathematics that every programmer should
-have at least a working knowledge of. In this exercise, you'll research the
-topic as a group, and then produce some code that serves as an interesting
-example of what you learned.
+From [wikipedia](http://en.wikipedia.org/wiki/Binary_search_tree):
+    
+    In computer science, a binary search tree (BST), which may sometimes also 
+    be called an ordered or sorted binary tree, is a node-based binary tree 
+    data structure which has the following properties:
+    
+    1) The left subtree of a node contains only nodes with keys less than the 
+    node's key.
+    
+    2) The right subtree of a node contains only nodes with keys greater than 
+    the node's key.
+    
+    3) Both the left and right subtrees must also be binary search trees.
+    
+    The major advantage of binary search trees over other data structures is 
+    that the related sorting algorithms and search algorithms such as in-order 
+    traversal can be very efficient.
+    Binary search trees are a fundamental data structure used to construct more
+     abstract data structures such as sets, multisets, and associative arrays.
 
-This is primarily a research exercise, but in order to get credit for working on
-it, each student is expected to produce working code that either does something
-useful on its own or alternatively serves as a tool for other projects to use.
+The BST library implements a simple binary search tree. A tree can be created as follows:
 
-While working on this assignment, please keep the following guidelines in mind:
+    tree = Tree.new(1) #note an initial value is required to create a tree
 
-* You can research any area of combinatorics of interest to you, but in
-  particular, you should look into graph theory because it is most directly
-  applicable to programming problems and is fairly accessible without too much
-  background information. In addition to the tremendous amount of information
-  on wikipedia, there is a [free book on Graph
-  Theory](http://code.google.com/p/graph-theory-algorithms-book/) that might 
-  be a good place to start. 
+After the tree has been created, there are several operations that can be performed on it:
 
-* You should actively share resources with your fellow students in the session,
-  as well as discuss your ideas and questions as they arise. This will make it
-  possible to sift through the information much faster, and also help with
-  figuring out what areas might be worth focusing on. The open-endedness of this
-  exercise is intentional, so don't let it overwhelm you: Work together!
-
-* Once you've gained a basic understanding of what combinatorics is about, you
-  should think of either a program you can write that uses some combinatorial
-  concepts, or think about building some library code that will make it easier
-  for others to use combinatorial structures and algorithms in their own code.
-  Be sure to include some practical examples no matter which approach you
-  choose.
+    tree.add(4) #add a new value
+    tree.remove(4) #remove a value
+    tree.contains?(4) # => false 
   
-* Don't spend too much time on concepts that feel far outside of your reach, and
-  similarly, don't worry about picking a very advanced concept to demonstrate in
-  your programs. Instead, stick to the things that seem most fundamental, and
-  work with us to figure out whether what you have in mind will be a good fit
-  for this assignment. You can submit your project ideas via university-web for
-  feedback at any time during the course, and it's recommended to do so before
-  putting a lot of work into any particular idea.
+Additionally, the BST::Tree object has two different traversal methods that are used to return a string representing the entire tree in order and in reverse order.
+
+    puts tree.to_s #prints out the tree in-order, from smallest value to largest
+    puts tree.to_s_reverse #prints out the entire tree in reverse order, from largest to smallest
+    
+The cool thing about the traversal algorithms are how simple they are and how easily they lend themselves to recursion. Below is the in_order_traversal method definition:
+    
+    def in_order_traversal node, ary
+      if node.left
+        in_order_traversal(node.left,ary) #traverse left subtree (look at elements smaller than root of current subtree)
+      end
+      ary << node.value # add root of current subtree to our array
+      if node.right
+        in_order_traversal(node.right,ary) #traverse right subtree (look at elements larger than root of current subtree)
+      end
+    end
