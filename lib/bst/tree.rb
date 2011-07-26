@@ -33,12 +33,10 @@ module BST
       current = @root
       parent = nil
       while true
-        if current.value == value #found the value to remove
-          # three possibilities
+        if current.value == value
           if current.left && current.right # two children
-            # find next biggest value or next smallest value. copy that value into node. 
-            # delete the node that contained the next biggest value
-            # to keep tree reasonably balanced, flip a coin to choose.
+            # strategy here is to copy replacemant value into node to be removed,
+            # then remove the node that contained the replacement value
             replacement = Time.now.to_i.even? ? min_under_node(current) : max_under_node(current)
             new_value = replacement.value
             remove new_value
@@ -52,7 +50,7 @@ module BST
           end
           break
         end
-        # traversal code
+        #traversal code
         side = current.value > value ? :left : :right
         break if current.send(side).nil?
         parent = current
@@ -113,7 +111,7 @@ module BST
       end
       current
     end
-
+    
     # get node with greatest value of left subtree
     def max_under_node node
       current = node.left
